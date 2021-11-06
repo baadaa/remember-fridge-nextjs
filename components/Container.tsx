@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 
-const FridgeShell = styled.main`
+const Container = styled.main`
   background-color: var(--containerBg);
   position: relative;
   max-width: 740px;
   z-index: 1;
   width: 100%;
   box-sizing: border-box;
-  padding: 25px 15px 0;
-  min-height: calc(100vh - 85px);
+  padding: 25px 15px 100px;
+  height: calc(100vh - 85px);
+  overflow-y: scroll;
   border-radius: 20px 20px 0 0;
   margin: 0 auto 0 0;
   transition: all 0.3s;
@@ -22,7 +23,7 @@ const FridgeShell = styled.main`
     grid-template-rows: 150px;
     grid-auto-flow: row;
     grid-gap: 24px;
-    padding-bottom: 40px;
+    /* padding-bottom: 40px; */
     transition: all 0.3s;
     @media screen and (max-width: 375px) {
       grid-template-columns: repeat(auto-fill, 140px);
@@ -37,7 +38,7 @@ const FridgeShell = styled.main`
     }
   }
   @media screen and (max-width: 800px) {
-    padding-bottom: 80px;
+    /* padding-bottom: 80px; */
     margin-left: auto;
   }
   @media screen and (max-width: 570px) {
@@ -56,4 +57,4 @@ const FridgeShell = styled.main`
   }
 `;
 
-export default FridgeShell;
+export default Container;

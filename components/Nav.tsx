@@ -1,12 +1,7 @@
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-import {
-  IconFreezer,
-  IconFridge,
-  IconList,
-  IconSettings,
-} from './icons/NavIcons';
+import { IconFreezer, IconFridge, IconList, IconSettings } from './Icons';
 
 const NavStyles = styled.nav`
   order: -1;
