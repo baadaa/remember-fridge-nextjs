@@ -1,6 +1,32 @@
 import styled from 'styled-components';
 
-const BaseBigButton = styled.button`
+export const AddButton = styled.button`
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  margin: 0 auto 30px;
+  background: var(--addButton);
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  padding: 15px 0;
+  border-radius: 50px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  svg {
+    margin-right: 10px;
+  }
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: -1px 3px 15px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+export const BaseBigButton = styled.button`
   border: none;
   outline: none;
   border-radius: 30px;
@@ -12,7 +38,14 @@ const BaseBigButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+  svg {
+    margin-right: 10px;
+  }
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: -1px 3px 15px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 type DataResetProps = {

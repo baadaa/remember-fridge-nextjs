@@ -1,15 +1,17 @@
-import { useState, useEffect, SyntheticEvent } from 'react';
+import { SyntheticEvent } from 'react';
 import type { NextPage } from 'next';
-import styled from 'styled-components';
-import Image from 'next/image';
-import Layout from '../components/Layout';
-import Wrapper from '../components/InnerWrapper';
-import { useTheme, Theme } from '../contexts/ThemeContext';
-import { Google } from '../components/Icons';
-import { DataResetButton } from '../components/Buttons/Buttons';
+
+import Layout from '@/components/Layout';
+import Wrapper from '@/components/InnerWrapper';
+import { useTheme, Theme } from '@/contexts/ThemeContext';
+import { useFoods } from '@/contexts/FoodContext';
+import { Google } from '@/components/Icons';
+import { DataResetButton } from '@/components/Buttons/Buttons';
+import { loadSamples } from '@/coreMethods/dataPersistence';
 
 const SettingsPage: NextPage = () => {
   const { theme, setTheme } = useTheme();
+  const { setFoodItems } = useFoods();
   const colorSwitcher = (e: SyntheticEvent & { target: HTMLInputElement }) => {
     const { target } = e;
     if (target.value === 'Dark') {
@@ -20,6 +22,10 @@ const SettingsPage: NextPage = () => {
       document.body.className = 'lightMode';
     }
   };
+  const updateFoods = async () => {
+    const newFoods = await loadSamples();
+    setFoodItems(newFoods);
+  } 
 
   return (
     <Layout>
@@ -28,34 +34,22 @@ const SettingsPage: NextPage = () => {
         <form onSubmit={(e) => console.log(e)} className="settings">
           <div className="fieldRow">
             <h3>Color Mode</h3>
-            <span className="option">
+            {['Light', 'Dark'].map((option, index) => (
+              <span className="option" key={index}>
               <input
                 type="radio"
-                id="light"
+                id={option.toLowerCase()}
                 name="colorMode"
-                value="Light"
-                checked={theme === 'Light'}
+                value={option}
+                checked={theme === option}
                 onChange={colorSwitcher}
               />
-              <label htmlFor="light">
+              <label htmlFor={option.toLowerCase()}>
                 <span className="circle" />
-                Light
+                {option}
               </label>
             </span>
-            <span className="option">
-              <input
-                type="radio"
-                id="dark"
-                name="colorMode"
-                value="Dark"
-                checked={theme === 'Dark'}
-                onChange={colorSwitcher}
-              />
-              <label htmlFor="dark">
-                <span className="circle" />
-                Dark
-              </label>
-            </span>
+            ))}
           </div>
           <div className="fieldRow">
             <h3>Data Storage</h3>
@@ -86,7 +80,7 @@ const SettingsPage: NextPage = () => {
             undone.
           </p>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <DataResetButton option="load" click={() => console.log('click')} />
+            <DataResetButton option="load" click={updateFoods} />
             <DataResetButton
               option="delete"
               click={() => console.log('click')}

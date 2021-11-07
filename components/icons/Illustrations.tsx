@@ -1,3 +1,58 @@
+import styled from "styled-components";
+import { FridgeArea } from "../../types/types";
+
+const Nothing = styled.div`
+  position: absolute;
+  top: 120px;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  .illo {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    overflow: hidden;
+    margin: 0 auto;
+    animation: shake 6s ease infinite;
+    background-repeat: no-repeat;
+    @media screen and (max-width: 335px) {
+      width: 150px;
+      height: 150px;
+    }
+  }
+  h3 {
+    font-weight: 700;
+    margin: 20px 0 0;
+    opacity: 0.7;
+    font-size: 17px;
+  }
+  p {
+    font-size: 15px;
+    margin: 6px 0 0;
+    opacity: 0.7;
+  }
+  @keyframes shake {
+    0% {
+      transform: rotate(5deg);
+    }
+    2% {
+      transform: rotate(-5deg);
+    }
+    4% {
+      transform: rotate(5deg);
+    }
+    6% {
+      transform: rotate(0deg);
+    }
+    98% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(5deg);
+    }
+  }
+`;
+
 export const EmptyFridge: React.FC<React.SVGAttributes<SVGElement>> = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
     <title>empty-fridge</title>
@@ -74,4 +129,14 @@ export const EmptyFridge: React.FC<React.SVGAttributes<SVGElement>> = () => (
       fillRule="evenodd"
     />
   </svg>
+);
+
+export const Nothingness: React.FC<FridgeArea> = ({ space = 'Fridge' }) => (
+  <Nothing>
+    <div className="illo">
+      <EmptyFridge />
+    </div>
+    <h3>Your {space} is empty.</h3>
+    <p>Why don’t you stock up?</p>
+  </Nothing>
 );

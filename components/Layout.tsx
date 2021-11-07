@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import 'normalize.css';
 import GlobalStyles from '../styles/global';
 import SimpleHeader from './SimpleHeader';

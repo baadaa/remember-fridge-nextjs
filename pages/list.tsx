@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
-import Layout from '../components/Layout';
-import Wrapper from '../components/InnerWrapper';
+import Layout from '@/components/Layout';
+import Wrapper from '@/components/InnerWrapper';
 
 const ListPage: NextPage = () => (
   <Layout>
