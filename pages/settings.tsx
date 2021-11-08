@@ -3,8 +3,7 @@ import type { NextPage } from 'next';
 
 import Layout from '@/components/Layout';
 import Wrapper from '@/components/InnerWrapper';
-import { useTheme, Theme } from '@/contexts/ThemeContext';
-import { useFoods } from '@/contexts/FoodContext';
+import { useTheme, Theme, useFoods } from '@/contexts/index';
 import { Google } from '@/components/Icons';
 import { DataResetButton } from '@/components/Buttons/Buttons';
 import { loadSamples } from '@/coreMethods/dataPersistence';
@@ -22,10 +21,10 @@ const SettingsPage: NextPage = () => {
       document.body.className = 'lightMode';
     }
   };
-  const updateFoods = async () => {
+  const loadFoods = async () => {
     const newFoods = await loadSamples();
     setFoodItems(newFoods);
-  } 
+  };
 
   return (
     <Layout>
@@ -36,19 +35,19 @@ const SettingsPage: NextPage = () => {
             <h3>Color Mode</h3>
             {['Light', 'Dark'].map((option, index) => (
               <span className="option" key={index}>
-              <input
-                type="radio"
-                id={option.toLowerCase()}
-                name="colorMode"
-                value={option}
-                checked={theme === option}
-                onChange={colorSwitcher}
-              />
-              <label htmlFor={option.toLowerCase()}>
-                <span className="circle" />
-                {option}
-              </label>
-            </span>
+                <input
+                  type="radio"
+                  id={option.toLowerCase()}
+                  name="colorMode"
+                  value={option}
+                  checked={theme === option}
+                  onChange={colorSwitcher}
+                />
+                <label htmlFor={option.toLowerCase()}>
+                  <span className="circle" />
+                  {option}
+                </label>
+              </span>
             ))}
           </div>
           <div className="fieldRow">
@@ -80,11 +79,8 @@ const SettingsPage: NextPage = () => {
             undone.
           </p>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <DataResetButton option="load" click={updateFoods} />
-            <DataResetButton
-              option="delete"
-              click={() => console.log('click')}
-            />
+            <DataResetButton option="load" click={loadFoods} />
+            <DataResetButton option="delete" click={() => setFoodItems([])} />
           </div>
         </div>
       </Wrapper>

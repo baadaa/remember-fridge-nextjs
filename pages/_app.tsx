@@ -1,41 +1,54 @@
 import { useState, useEffect } from 'react';
-// import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { ThemeContext, Theme } from '../contexts/ThemeContext';
-import { FoodContext } from '../contexts/FoodContext';
-import { Food } from '../types/types';
+import { ThemeContext, Theme, FoodContext } from '@/contexts/index';
+import { Food } from '@/types/types';
+import {
+  setLocalStorage,
+  toggleColorMode,
+} from '@/coreMethods//dataPersistence';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState(Theme.Light);
   const [foodItems, setFoodItems] = useState<Array<Food>>([]);
   const colorMode = { theme, setTheme };
   const foods = { foodItems, setFoodItems };
-  const loadPreference = () => {
-    const blob = localStorage.getItem('b_fridge_colorMode');
-    if (!blob) {
-      setTheme(Theme.Light);
-      document.body.className = 'lightMode';
-      return null;
-    }
-    const currentTheme = JSON.parse(blob) as string;
-    const isDark = currentTheme === 'Dark';
+  const applyColorTheme = (isDark: boolean) => {
     if (isDark) {
       setTheme(Theme.Dark);
     } else {
       setTheme(Theme.Light);
     }
-    document.body.className = isDark ? 'darkMode' : 'lightMode';
+    toggleColorMode(isDark);
   };
-  const savePreference = () => {
-    localStorage.setItem('b_fridge_colorMode', JSON.stringify(theme));
+  const loadColorTheme = () => {
+    const savedTheme = localStorage.getItem('b_fridge_colorMode');
+    if (!savedTheme) {
+      const isDark = false;
+      applyColorTheme(isDark);
+      return null;
+    }
+    const currentTheme = JSON.parse(savedTheme) as string;
+    const isDark = currentTheme === 'Dark';
+    applyColorTheme(isDark);
+  };
+  const loadStoredFoods = () => {
+    const storedFoods = window.localStorage.getItem('b_fridge_foods');
+    if (storedFoods) {
+      setFoodItems(JSON.parse(storedFoods));
+    }
   };
   useEffect(() => {
-    loadPreference();
+    loadColorTheme();
+    loadStoredFoods();
   }, []);
 
   useEffect(() => {
-    savePreference();
+    setLocalStorage('b_fridge_colorMode', JSON.stringify(theme));
   }, [theme]);
+
+  useEffect(() => {
+    setLocalStorage('b_fridge_foods', JSON.stringify(foodItems));
+  }, [foodItems]);
 
   return (
     <ThemeContext.Provider value={colorMode}>
