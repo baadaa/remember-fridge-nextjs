@@ -6,6 +6,9 @@ import { Food } from '@/types/types';
 const FoodStyle = styled.article`
   position: relative;
   box-sizing: border-box;
+  button {
+    cursor: pointer;
+  }
   &:hover {
     transform: scale(1.05);
   }

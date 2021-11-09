@@ -1,5 +1,5 @@
 {
-  "extends": ["next/core-web-vitals", "wesbos/typescript"],
+  "extends": ["next/core-web-vitals"],
   "rules": {
     "no-shadow":1,
     "react/prop-types": 0

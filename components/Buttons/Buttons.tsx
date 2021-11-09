@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { IconClose, IconYes, IconNo, IconTrash } from '../Icons';
 
 export const AddButton = styled.button`
   width: 100%;
@@ -25,6 +26,21 @@ export const AddButton = styled.button`
     box-shadow: -1px 3px 15px rgba(0, 0, 0, 0.2);
   }
 `;
+export const CloseButton = ({click = () => {}}) => (
+  <button
+    onClick={click}
+    style={{
+      background: "transparent",
+      border: "none",
+      position: "absolute",
+      cursor: 'pointer',
+      top: 0,
+      right: 0
+    }}
+  >
+    <IconClose />
+  </button>
+);
 
 export const BaseBigButton = styled.button`
   border: none;

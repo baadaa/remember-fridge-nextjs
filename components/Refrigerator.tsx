@@ -1,32 +1,34 @@
-import { useEffect } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
 import { IconAdd, Nothingness } from './Icons';
 import { AddButton } from '@/components/Buttons/Buttons';
 import { FridgeArea } from '@/types/types';
 import { useFoods } from '@/contexts/index';
 import FoodItem from '@/components/FoodItem/FoodItem';
+import EditorModal from '@/components/EditorModal';
 
 const Refrigerator: React.FC<FridgeArea> = ({ space }) => {
   const { foodItems, setFoodItems } = useFoods();
-  useEffect(() => {
-    console.log(foodItems);
-  });
+  const [ editorIsActive, setEditorIsActive ] = useState(false);
+
+  const foodInCategory = foodItems.filter(
+    (food) => food && food.category === space.toLowerCase()
+  );
   return (
     <>
+      {editorIsActive && <EditorModal closeModal={() => setEditorIsActive(false)} />}
       <div style={{ width: '100%', margin: '0 auto' }}>
-        <AddButton>
+        <AddButton onClick={() => setEditorIsActive(true)}>
           <IconAdd />
           Add a new item
         </AddButton>
       </div>
       <div className="container">
-        {foodItems.length === 0 ? (
+        {foodInCategory.length === 0 ? (
           <Nothingness space={space} />
         ) : (
-          foodItems.map(
+          foodInCategory.map(
             (food) =>
-              food &&
-              food.category === space.toLowerCase() && (
+              food && (
                 <FoodItem
                   key={food.id}
                   id={food.id}

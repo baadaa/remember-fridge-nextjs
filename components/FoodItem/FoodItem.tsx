@@ -8,11 +8,19 @@ import {
   DeleteConfirmBtns,
 } from './styledForFoodItem';
 import { Food } from '@/types/types';
+import { useFoods } from '@/contexts/index';
 
 const FoodItem: React.FC<Food> = (props) => {
   const [deleteModal, setDeleteModal] = useState(false);
+  const { foodItems, setFoodItems } = useFoods();
   const { id, img, name, quantity, added, expires, category } = props;
   const editThis = () => console.log('editing');
+  const deleteThis = (uid: string) => {
+    const newFoodItems: Food[] = [...foodItems].filter(
+      (food) => food && food.id !== uid
+    );
+    setFoodItems(newFoodItems);
+  };
   return (
     <FoodCard cancelModal={() => setDeleteModal(false)}>
       <CardFront
@@ -50,7 +58,7 @@ const FoodItem: React.FC<Food> = (props) => {
             <button
               type="button"
               className="deleteYes"
-              // onClick={() => props.deleteThis(props.id)}
+              onClick={() => deleteThis(id)}
             >
               Yes<span>delete it</span>
             </button>
