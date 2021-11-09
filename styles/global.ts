@@ -67,6 +67,8 @@ export default createGlobalStyle`
     --modalSubsectionText: #333;
     --shoppingListBg: #fff;
     --shoppingListBorder: #e6e6e6;
+    --closeButtonStroke: #000;
+    --noIconColor: var(--green);
   }
 
   .darkMode {
@@ -95,6 +97,8 @@ export default createGlobalStyle`
     --modalSubsectionText: var(--yellow);
     --shoppingListBg: #333;
     --shoppingListBorder: #444;
+    --closeButtonStroke: #fff;
+    --noIconColor: #fff;
   }
 
   #root, #__next {
