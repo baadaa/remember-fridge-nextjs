@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import type { AppProps } from 'next/app';
-import { ThemeContext, Theme, FoodContext } from '@/contexts/index';
+import {
+  ThemeContext,
+  Theme,
+  FoodContext,
+  EditorContext,
+} from '@/contexts/index';
 import { Food } from '@/types/types';
 import {
   setLocalStorage,
@@ -8,10 +13,20 @@ import {
 } from '@/coreMethods//dataPersistence';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [theme, setTheme] = useState(Theme.Light);
+  const [theme, setTheme] = useState<Theme>(Theme.Light);
   const [foodItems, setFoodItems] = useState<Array<Food>>([]);
+  const [foodInEditor, setFoodInEditor] = useState<Food>({
+    id: '',
+    img: '',
+    quantity: '',
+    name: '',
+    category: 'fridge',
+    added: '',
+    expires: '',
+  });
   const colorMode = { theme, setTheme };
   const foods = { foodItems, setFoodItems };
+  const foodInFocus = { foodInEditor, setFoodInEditor };
   const applyColorTheme = (isDark: boolean) => {
     if (isDark) {
       setTheme(Theme.Dark);
@@ -53,7 +68,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeContext.Provider value={colorMode}>
       <FoodContext.Provider value={foods}>
-        <Component {...pageProps} />
+        <EditorContext.Provider value={foodInFocus}>
+          <Component {...pageProps} />
+        </EditorContext.Provider>
       </FoodContext.Provider>
     </ThemeContext.Provider>
   );
