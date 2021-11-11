@@ -10,7 +10,6 @@ import blank from './Icons/_.png';
 type EditorProps = {
   isActive: boolean;
   closeModal?: () => void;
-  editorMode?: 'add' | 'edit';
   currentSection?: Category;
 };
 
@@ -173,7 +172,6 @@ const Wrapper = styled.div<EditorProps>`
 const EditorModal: React.FC<EditorProps> = ({
   isActive = false,
   closeModal = () => {},
-  editorMode = 'add',
   currentSection = 'fridge',
 }) => {
   const { foodInEditor, setFoodInEditor } = useFoodInEditor();
@@ -196,8 +194,10 @@ const EditorModal: React.FC<EditorProps> = ({
       <form onSubmit={(e) => e.preventDefault()}>
         <CloseButton click={closeModal} />
         <h2>
-          <span style={{ textTransform: 'capitalize' }}>{editorMode}</span> an
-          item
+          <span style={{ textTransform: 'capitalize' }}>
+            {!id ? 'add' : 'edit'}
+          </span>{' '}
+          an item
         </h2>
         <div className="top-section">
           {img && (

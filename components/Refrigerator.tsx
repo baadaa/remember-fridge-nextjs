@@ -26,7 +26,6 @@ const Refrigerator: React.FC<FridgeArea> = ({ space }) => {
       <EditorModal
         isActive={editorIsActive}
         closeModal={() => setEditorIsActive(false)}
-        editorMode="add"
         currentSection={space}
       />
       <div style={{ width: '100%', margin: '0 auto' }}>
