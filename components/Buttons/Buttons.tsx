@@ -26,16 +26,20 @@ export const AddButton = styled.button`
     box-shadow: -1px 3px 15px rgba(0, 0, 0, 0.2);
   }
 `;
-export const CloseButton = ({click = () => {}}) => (
+type ButtonProp = {
+  click: () => void;
+};
+export const CloseButton: React.FC<ButtonProp> = ({ click = () => {} }) => (
   <button
     onClick={click}
+    type="button"
     style={{
-      background: "transparent",
-      border: "none",
-      position: "absolute",
+      background: 'transparent',
+      border: 'none',
+      position: 'absolute',
       cursor: 'pointer',
       top: 0,
-      right: 0
+      right: 0,
     }}
   >
     <IconClose />
