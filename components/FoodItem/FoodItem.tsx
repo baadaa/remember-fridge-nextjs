@@ -8,13 +8,29 @@ import {
   DeleteConfirmBtns,
 } from './styledForFoodItem';
 import { Food } from '@/types/types';
-import { useFoods } from '@/contexts/index';
+import { useFoods, useFoodInEditor } from '@/contexts/index';
 
-const FoodItem: React.FC<Food> = (props) => {
+type FoodItemProps = Food & {
+  edit: () => void;
+};
+const FoodItem: React.FC<FoodItemProps> = ({
+  id,
+  img,
+  name,
+  quantity,
+  added,
+  expires,
+  category,
+  edit,
+}) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const { foodItems, setFoodItems } = useFoods();
-  const { id, img, name, quantity, added, expires, category } = props;
-  const editThis = () => console.log('editing');
+  const { setFoodInEditor } = useFoodInEditor();
+  // const { id, img, name, quantity, added, expires, category } = props;
+  const editThis = () => {
+    setFoodInEditor({ id, img, name, quantity, added, expires, category });
+    edit();
+  };
   const deleteThis = (uid: string) => {
     const newFoodItems: Food[] = [...foodItems].filter(
       (food) => food && food.id !== uid

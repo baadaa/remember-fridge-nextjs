@@ -1,21 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IconAdd, Nothingness } from './Icons';
 import { AddButton } from '@/components/Buttons/Buttons';
 import { FridgeArea } from '@/types/types';
-import { useFoods } from '@/contexts/index';
+import { useFoods, useFoodInEditor } from '@/contexts/index';
 import FoodItem from '@/components/FoodItem/FoodItem';
 import EditorModal from '@/components/EditorModal';
+import { emptyFoodItem } from './foodTemplate';
 
 const Refrigerator: React.FC<FridgeArea> = ({ space }) => {
   const { foodItems, setFoodItems } = useFoods();
-  const [ editorIsActive, setEditorIsActive ] = useState(false);
+  const [editorIsActive, setEditorIsActive] = useState(false);
+  const { setFoodInEditor } = useFoodInEditor();
 
   const foodInCategory = foodItems.filter(
     (food) => food && food.category === space.toLowerCase()
   );
+
+  useEffect(() => {
+    if (!editorIsActive) {
+      setFoodInEditor(emptyFoodItem);
+    }
+  }, [editorIsActive]);
   return (
     <>
-      {editorIsActive && <EditorModal closeModal={() => setEditorIsActive(false)} />}
+      <EditorModal
+        isActive={editorIsActive}
+        closeModal={() => setEditorIsActive(false)}
+        editorMode="add"
+        currentSection={space}
+      />
       <div style={{ width: '100%', margin: '0 auto' }}>
         <AddButton onClick={() => setEditorIsActive(true)}>
           <IconAdd />
@@ -38,6 +51,7 @@ const Refrigerator: React.FC<FridgeArea> = ({ space }) => {
                   category={food.category}
                   added={food.added}
                   expires={food.expires}
+                  edit={() => setEditorIsActive(true)}
                 />
               )
           )
