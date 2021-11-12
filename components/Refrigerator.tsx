@@ -4,7 +4,7 @@ import { AddButton } from '@/components/Buttons/Buttons';
 import { FridgeArea } from '@/types/types';
 import { useFoods, useFoodInEditor } from '@/contexts/index';
 import FoodItem from '@/components/FoodItem/FoodItem';
-import EditorModal from '@/components/EditorModal';
+import EditorModal from '@/components/EditorModal/EditorModal';
 import { emptyFoodItem } from './foodTemplate';
 
 const Refrigerator: React.FC<FridgeArea> = ({ space }) => {

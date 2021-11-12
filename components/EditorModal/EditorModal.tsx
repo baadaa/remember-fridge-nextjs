@@ -1,11 +1,11 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { Category } from '@/types/types';
-import { CloseButton } from './Buttons/Buttons';
+import { CloseButton } from '../Buttons/Buttons';
 import { IconRotate } from '@/components/Icons';
 import { useFoodInEditor } from '@/contexts/index';
-import blank from './Icons/_.png';
+import blank from '@/components/Icons/_.png';
 
 type EditorProps = {
   isActive: boolean;
@@ -214,7 +214,7 @@ const TextField = ({
   labelText = '',
   id = '',
   value = '',
-  editField = () => null,
+  editField = (e) => console.log(e),
   isRequired = false,
   nameMissing = false,
 }) => (
@@ -252,11 +252,35 @@ const EditorModal: React.FC<EditorProps> = ({
   );
   const [workingAdded, setWorkingAdded] = useState(added);
   const [workingExpires, setWorkingExpires] = useState(expires);
-
+  console.log(foodInEditor, name, workingName);
   const changeSection = (e: SyntheticEvent & { target: HTMLInputElement }) => {
     const targetSection = e.target.value as Category;
     setWorkingCategory(targetSection);
   };
+  const handleUpdate = (e: SyntheticEvent & { target: HTMLInputElement }) => {
+    const updateStates = {
+      name: setWorkingName,
+      img: setWorkingImg,
+      quantity: setWorkingQuantity,
+    };
+    const field = e.target.id;
+    const val = e.target.value;
+    updateStates[field](val);
+    // console.log(field, val);
+  };
+  useEffect(() => {
+    setWorkingName(name);
+    setWorkingImg(img);
+    setWorkingQuantity(quantity);
+    if (!id) {
+      setWorkingCategory(currentSection);
+    } else {
+      setWorkingCategory(category || currentSection);
+    }
+    console.log(name, category, currentSection);
+    setWorkingAdded(added);
+    setWorkingExpires(expires);
+  }, [id]);
   return (
     <Wrapper isActive={isActive}>
       <form onSubmit={(e) => e.preventDefault()}>
@@ -330,16 +354,16 @@ const EditorModal: React.FC<EditorProps> = ({
           <TextField
             id="name"
             labelText="Item name"
-            editField={() => console.log('editing')}
-            value={name}
+            editField={handleUpdate}
+            value={workingName}
             isRequired
             nameMissing={false}
           />
           <TextField
             id="quantity"
             labelText="Quantity"
-            editField={() => console.log('editing')}
-            value={quantity}
+            editField={handleUpdate}
+            value={workingQuantity}
           />
         </div>
       </form>

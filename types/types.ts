@@ -9,6 +9,7 @@ export type Food = {
   added: string;
   expires?: string;
 };
+
 export type FridgeArea = {
   space: Category;
 };
