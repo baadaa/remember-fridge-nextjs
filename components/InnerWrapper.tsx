@@ -142,12 +142,24 @@ const Wrapper = styled.div`
     border-radius: 4px;
     h4 {
       margin: 0;
-      font-size: 14px;
+      display: flex;
+      /* justify-content: center; */
+      align-items: center;
+      color: var(--missingField);
+      font-size: 17px;
+    }
+    svg {
+      width: 22px;
+      height: 22px;
+      margin-right: 10px;
     }
     p {
       margin: 10px 0 10px;
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: 400;
+      em {
+        font-weight: 600;
+      }
     }
   }
 `;
