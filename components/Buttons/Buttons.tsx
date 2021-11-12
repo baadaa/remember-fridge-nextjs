@@ -84,6 +84,11 @@ const DataReset = styled.button<DataResetProps>`
     props.option === 'load' ? 'var(--removeButton)' : '#fff'};
   background: ${(props) =>
     props.option === 'load' ? '#fff' : 'var(--removeButton)'};
+  transition: transform 0.3s, box-shadow 0.3s;
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: -1px 3px 15px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 export const DataResetButton: React.FC<DataResetProps> = ({
