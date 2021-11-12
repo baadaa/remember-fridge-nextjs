@@ -6,20 +6,15 @@ import Wrapper from '@/components/InnerWrapper';
 import { useTheme, Theme, useFoods } from '@/contexts/index';
 import { Google } from '@/components/Icons';
 import { DataResetButton } from '@/components/Buttons/Buttons';
-import { loadSamples } from '@/coreMethods/dataPersistence';
+import { loadSamples, toggleColorMode } from '@/coreMethods/dataPersistence';
 
 const SettingsPage: NextPage = () => {
   const { theme, setTheme } = useTheme();
   const { setFoodItems } = useFoods();
   const colorSwitcher = (e: SyntheticEvent & { target: HTMLInputElement }) => {
-    const { target } = e;
-    if (target.value === 'Dark') {
-      setTheme(Theme.Dark);
-      document.body.className = 'darkMode';
-    } else {
-      setTheme(Theme.Light);
-      document.body.className = 'lightMode';
-    }
+    const targetMode = e.target.value as Theme;
+    setTheme(targetMode);
+    toggleColorMode(targetMode);
   };
   const loadFoods = async () => {
     const newFoods = await loadSamples();

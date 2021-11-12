@@ -20,7 +20,7 @@ const Refrigerator: React.FC<FridgeArea> = ({ space }) => {
     if (!editorIsActive) {
       setFoodInEditor(emptyFoodItem);
     }
-  }, [editorIsActive]);
+  }, [editorIsActive, setFoodInEditor]);
   return (
     <>
       <EditorModal
