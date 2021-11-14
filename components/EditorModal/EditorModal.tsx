@@ -1,10 +1,14 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
+import DatePicker from 'react-datepicker';
+import { format, parse } from 'date-fns';
 import { Category } from '@/types/types';
 import { CloseButton } from '../Buttons/Buttons';
 import { IconRotate } from '@/components/Icons';
 import { useFoodInEditor } from '@/contexts/index';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import blank from '@/components/Icons/_.png';
 
 type EditorProps = {
@@ -184,9 +188,6 @@ const FieldItem = styled.div<{ missing: boolean }>`
     font-weight: 700;
     flex-basis: 80px;
   }
-  &:last-of-type {
-    margin-bottom: 0;
-  }
   .req {
     color: red;
   }
@@ -237,6 +238,33 @@ const TextField = ({
     </div>
   </FieldItem>
 );
+const DateField = ({
+  labelText = '',
+  id = '',
+  value = new Date(),
+  editField = (e) => console.log(e),
+  isRequired = false,
+  nameMissing = false,
+}) => (
+  <FieldItem missing={nameMissing}>
+    <label htmlFor={id}>
+      {labelText}
+      <span className="req" style={{ display: !isRequired ? 'none' : '' }}>
+        *
+      </span>
+    </label>
+    <div className="inputStyle">
+      <DatePicker
+        id={id}
+        selected={value}
+        dateFormat="MMMM d, yyyy"
+        locale="en"
+        onChange={editField}
+      />
+    </div>
+  </FieldItem>
+);
+
 const EditorModal: React.FC<EditorProps> = ({
   isActive = false,
   closeModal = () => {},
@@ -250,8 +278,8 @@ const EditorModal: React.FC<EditorProps> = ({
   const [workingCategory, setWorkingCategory] = useState(
     category || currentSection
   );
-  const [workingAdded, setWorkingAdded] = useState(added);
-  const [workingExpires, setWorkingExpires] = useState(expires);
+  const [workingAdded, setWorkingAdded] = useState<Date>();
+  const [workingExpires, setWorkingExpires] = useState<Date>();
   console.log(foodInEditor, name, workingName);
   const changeSection = (e: SyntheticEvent & { target: HTMLInputElement }) => {
     const targetSection = e.target.value as Category;
@@ -277,9 +305,12 @@ const EditorModal: React.FC<EditorProps> = ({
     } else {
       setWorkingCategory(category || currentSection);
     }
-    console.log(name, category, currentSection);
-    setWorkingAdded(added);
-    setWorkingExpires(expires);
+    const addedDate = added ? parse(added, 'LLLL d, yyyy', new Date()) : null;
+    const expiryDate = expires
+      ? parse(expires, 'LLLL d, yyyy', new Date())
+      : null;
+    setWorkingAdded(addedDate);
+    setWorkingExpires(expiryDate || null);
   }, [id]);
   return (
     <Wrapper isActive={isActive}>
@@ -364,6 +395,20 @@ const EditorModal: React.FC<EditorProps> = ({
             labelText="Quantity"
             editField={handleUpdate}
             value={workingQuantity}
+          />
+          <DateField
+            id="added"
+            labelText="Added on"
+            value={workingAdded}
+            editField={setWorkingAdded}
+            isRequired
+          />
+          <DateField
+            id="expires"
+            labelText="Expires on"
+            value={workingExpires}
+            editField={setWorkingExpires}
+            isRequired
           />
         </div>
       </form>
