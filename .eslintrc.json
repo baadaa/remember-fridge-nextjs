@@ -1,7 +1,8 @@
 {
   "extends": ["next/core-web-vitals", "wesbos/typescript"],
   "rules": {
-    "no-shadow":1,
+    "no-shadow":0,
+    "@typescript-eslint/no-shadow": 1,
     "react/prop-types": 0
   }
 }

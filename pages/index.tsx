@@ -4,7 +4,7 @@ import Refrigerator from '@/components/Refrigerator';
 
 const FridgePage: NextPage = () => (
   <Layout>
-    <Refrigerator space="Fridge" />
+    <Refrigerator space="fridge" />
   </Layout>
 );
 

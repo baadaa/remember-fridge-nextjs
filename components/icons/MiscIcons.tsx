@@ -1,3 +1,19 @@
+export const IconWarning: React.FC<React.SVGAttributes<SVGElement>> = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 32 32"
+  >
+    <g fill="var(--missingField)">
+      <path
+        fill="var(--missingField)"
+        d="M16,0C7.178,0,0,7.178,0,16s7.178,16,16,16s16-7.178,16-16S24.822,0,16,0z M17.929,7L17,19h-2L14.071,7 H17.929z M16,25c-1.105,0-2-0.895-2-2c0-1.105,0.895-2,2-2c1.105,0,2,0.895,2,2C18,24.105,17.105,25,16,25z"
+      />
+    </g>
+  </svg>
+);
+
 export const IconAdd: React.FC<React.SVGAttributes<SVGElement>> = () => (
   <svg width="13" height="13" xmlns="http://www.w3.org/2000/svg">
     <g fill="#FFF" fillRule="evenodd">
