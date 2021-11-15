@@ -32,7 +32,6 @@ const NavStyles = styled.nav`
     font-size: 12px;
     font-weight: 700;
     padding: 0;
-    cursor: pointer;
     color: inherit;
     display: flex;
     border: 0;

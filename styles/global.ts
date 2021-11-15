@@ -37,7 +37,9 @@ export default createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
-
+  button {
+    cursor: pointer;
+  }
   *, * > * {
     box-sizing: border-box;
   }

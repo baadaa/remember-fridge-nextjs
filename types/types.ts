@@ -13,3 +13,17 @@ export type Food = {
 export type FridgeArea = {
   space: Category;
 };
+
+export type EditorProps = {
+  isActive: boolean;
+  isRemoving?: boolean;
+  closeModal?: () => void;
+  currentSection?: Category;
+  nameIsMissing?: boolean;
+};
+
+export type ButtonProps = {
+  isRemoving?: boolean;
+  click?: () => void;
+  isEditing?: boolean;
+};

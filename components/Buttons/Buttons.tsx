@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ButtonProps } from '@/types/types';
 import { IconClose, IconYes, IconNo, IconTrash } from '../Icons';
 
 export const AddButton = styled.button`
@@ -17,7 +18,6 @@ export const AddButton = styled.button`
   font-weight: 700;
   color: #fff;
   transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
   svg {
     margin-right: 10px;
   }
@@ -26,10 +26,7 @@ export const AddButton = styled.button`
     box-shadow: -1px 3px 15px rgba(0, 0, 0, 0.2);
   }
 `;
-type ButtonProp = {
-  click: () => void;
-};
-export const CloseButton: React.FC<ButtonProp> = ({ click = () => {} }) => (
+export const CloseButton: React.FC<ButtonProps> = ({ click = () => {} }) => (
   <button
     onClick={click}
     type="button"
@@ -37,7 +34,6 @@ export const CloseButton: React.FC<ButtonProp> = ({ click = () => {} }) => (
       background: 'transparent',
       border: 'none',
       position: 'absolute',
-      cursor: 'pointer',
       top: 0,
       right: 0,
     }}
@@ -78,7 +74,6 @@ const DataReset = styled.button<DataResetProps>`
   font-weight: 700;
   font-size: 13px;
   padding: 10px;
-  cursor: pointer;
   border: 1px solid var(--removeButton);
   color: ${(props) =>
     props.option === 'load' ? 'var(--removeButton)' : '#fff'};
@@ -98,4 +93,140 @@ export const DataResetButton: React.FC<DataResetProps> = ({
   <DataReset option={option} onClick={click}>
     {option === 'load' ? 'Load sample data' : 'Delete everything'}
   </DataReset>
+);
+
+const Save = styled(BaseBigButton)<ButtonProps>`
+  background: var(--saveButton);
+  transform: ${(props) =>
+    !props.isRemoving ? 'translateY(0)' : 'translateY(45px)'};
+  opacity: ${(props) => (!props.isRemoving ? 1 : 0)};
+  pointer-events: ${(props) => (!props.isRemoving ? 'all' : 'none')};
+  color: #fff;
+  img {
+    width: 12px;
+    height: 9px;
+    margin-right: 5px;
+  }
+`;
+const Cancel = styled(BaseBigButton)<ButtonProps>`
+  background: transparent;
+  border: 1px solid var(--cancelButton);
+  color: var(--cancelButton);
+  transform: ${(props) =>
+    !props.isRemoving ? 'translateY(0)' : 'translateY(45px)'};
+  opacity: ${(props) => (!props.isRemoving ? 1 : 0)};
+  pointer-events: ${(props) => (!props.isRemoving ? 'all' : 'none')};
+  img {
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+  }
+`;
+const Remove = styled(BaseBigButton)<ButtonProps>`
+  transform: ${(props) =>
+    props.isRemoving ? 'translateY(-45px)' : 'translateY(0)'};
+  opacity: ${(props) => (props.isRemoving ? 1 : 0)};
+  pointer-events: ${(props) => (props.isRemoving ? 'all' : 'none')};
+  background: var(--removeButton);
+  color: #fff;
+  display: ${(props) => (props.isEditing ? 'flex' : 'none')};
+  img {
+    width: 14px;
+    height: 15px;
+    margin-right: 5px;
+  }
+  &:hover {
+    transform: translateY(-46px);
+  }
+`;
+const CancelRemoval = styled(BaseBigButton)<ButtonProps>`
+  transform: ${(props) =>
+    props.isRemoving ? 'translateY(-45px)' : 'translateY(0)'};
+  opacity: ${(props) => (props.isRemoving ? 1 : 0)};
+  pointer-events: ${(props) => (props.isRemoving ? 'all' : 'none')};
+  display: ${(props) => (props.isEditing ? 'flex' : 'none')};
+  background: transparent;
+  border: 1px solid var(--removeCancelButton);
+  color: var(--removeCancelButton);
+  &:hover {
+    transform: translateY(-46px);
+  }
+`;
+const SaveSettings = styled(BaseBigButton)`
+  background: var(--saveButton);
+  color: #fff;
+  margin-left: 90px;
+  width: calc(100% - 90px);
+  margin-top: 15px;
+  img {
+    width: 12px;
+    height: 9px;
+    margin-right: 5px;
+  }
+`;
+const RemovePrompt = styled.button<ButtonProps>`
+  border: none;
+  outline: none;
+  flex-basis: 100%;
+  margin-left: 0;
+  padding: 0;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  color: var(--removeButton);
+  text-decoration: underline;
+  font-size: 14px;
+  display: ${(props) => (props.isEditing ? 'flex' : 'none')};
+  font-weight: 700;
+`;
+
+export const SaveButton: React.FC<ButtonProps> = ({
+  click,
+  isRemoving,
+  isEditing,
+}) => (
+  <Save onClick={click} isRemoving={isRemoving}>
+    <IconYes />
+    {isEditing ? 'Save' : 'Add item'}
+  </Save>
+);
+export const CancelButton: React.FC<ButtonProps> = ({ click, isRemoving }) => (
+  <Cancel onClick={click} isRemoving={isRemoving}>
+    <IconNo />
+    Cancel
+  </Cancel>
+);
+export const RemoveButton: React.FC<ButtonProps> = ({
+  click,
+  isEditing,
+  isRemoving,
+}) => (
+  <Remove onClick={click} isEditing={isEditing} isRemoving={isRemoving}>
+    <IconTrash />
+    Remove
+  </Remove>
+);
+export const CancelRemovalButton: React.FC<ButtonProps> = ({
+  isEditing,
+  click,
+  isRemoving,
+}) => (
+  <CancelRemoval isEditing={isEditing} isRemoving={isRemoving} onClick={click}>
+    Keep it
+  </CancelRemoval>
+);
+export const RemovePromptButton: React.FC<ButtonProps> = ({
+  click,
+  isEditing,
+  isRemoving,
+}) => (
+  <RemovePrompt isEditing={isEditing} onClick={click}>
+    {isRemoving ? 'This action cannot be undone.' : 'Remove this item'}
+  </RemovePrompt>
+);
+export const SaveSettingsButton: React.FC<ButtonProps> = ({ click }) => (
+  <SaveSettings onClick={click}>
+    <IconYes /> Save and close
+  </SaveSettings>
 );

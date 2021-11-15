@@ -8,7 +8,7 @@ import EditorModal from '@/components/EditorModal/EditorModal';
 import { emptyFoodItem } from './foodTemplate';
 
 const Refrigerator: React.FC<FridgeArea> = ({ space }) => {
-  const { foodItems, setFoodItems } = useFoods();
+  const { foodItems } = useFoods();
   const [editorIsActive, setEditorIsActive] = useState(false);
   const { setFoodInEditor } = useFoodInEditor();
 
