@@ -1,5 +1,6 @@
 {
-  "extends": ["next/core-web-vitals", "wesbos/typescript"],
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "plugins": ["@typescript-eslint","prettier"],
   "rules": {
     "no-shadow":0,
     "@typescript-eslint/no-shadow": 1,

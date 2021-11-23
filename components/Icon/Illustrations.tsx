@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { FridgeArea } from "../../types/types";
+import styled from 'styled-components';
+import { FridgeArea } from '../../types/types';
 
 const Nothing = styled.div`
   position: absolute;
