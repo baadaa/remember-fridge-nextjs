@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ButtonProps } from '@/types/types';
-import { IconClose, IconYes, IconNo, IconTrash } from '../Icons';
+import { IconClose, IconYes, IconNo, IconTrash } from '../Icon';
 
 export const AddButton = styled.button`
   width: 100%;

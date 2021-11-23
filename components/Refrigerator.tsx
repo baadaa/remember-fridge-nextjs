@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { IconAdd, Nothingness } from './Icons';
+import { IconAdd, Nothingness } from './Icon';
 import { AddButton } from '@/components/Buttons/Buttons';
 import { FridgeArea } from '@/types/types';
 import { useFoods, useFoodInEditor } from '@/contexts/index';

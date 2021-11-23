@@ -6,7 +6,7 @@ import {
   IconFridge,
   IconList,
   IconSettings,
-} from '@/components/Icons';
+} from '@/components/Icon';
 
 const NavStyles = styled.nav`
   order: -1;

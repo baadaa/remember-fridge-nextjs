@@ -12,11 +12,11 @@ import {
   RemoveButton,
   RemovePromptButton,
 } from '../Buttons/Buttons';
-import { IconRotate } from '@/components/Icons';
+import { IconRotate } from '@/components/Icon';
 import { useFoodInEditor, useFoods } from '@/contexts/index';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import blank from '@/components/Icons/_.png';
+import blank from '@/components/Icon/_.png';
 
 const Wrapper = styled.div<EditorProps>`
   position: fixed;

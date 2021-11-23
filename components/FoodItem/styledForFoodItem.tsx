@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Image from 'next/image';
-import { IconAdded, IconExpire, IconFood } from '@/components/Icons';
+import { IconAdded, IconExpire, IconFood } from '@/components/Icon';
 import { Food } from '@/types/types';
 
 const FoodStyle = styled.article`

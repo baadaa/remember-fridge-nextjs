@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import Layout from '@/components/Layout';
 import Wrapper from '@/components/InnerWrapper';
 import { useTheme, Theme, useFoods } from '@/contexts/index';
-import { Google, IconWarning } from '@/components/Icons';
+import { Google, IconWarning } from '@/components/Icon';
 import { DataResetButton } from '@/components/Buttons/Buttons';
 import { loadSamples, toggleColorMode } from '@/coreMethods/dataPersistence';
 
