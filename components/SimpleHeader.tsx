@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Image from 'next/image';
-
+import { placeholderAvatar } from 'sampleData/sampleUser';
 const introSliderHeight = 40;
 const Triangle = styled.div`
   width: 0;
@@ -122,7 +122,7 @@ const HeadWrapper = styled.header`
 `;
 
 type HeaderProps = {
-  user: { photo: string };
+  user: { profilePic: string };
 };
 
 const SimpleHeader: React.FC<HeaderProps> = ({ user }) => {
@@ -164,7 +164,8 @@ const SimpleHeader: React.FC<HeaderProps> = ({ user }) => {
         <div className="head">
           <Image
             role="button"
-            src={user.photo}
+            src={user.profilePic || placeholderAvatar}
+            unoptimized
             alt=" "
             className="headshot"
             width="45"

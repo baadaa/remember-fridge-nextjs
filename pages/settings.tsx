@@ -3,10 +3,12 @@ import type { NextPage } from 'next';
 
 import Layout from '@/components/Layout';
 import Wrapper from '@/components/InnerWrapper';
+import FirebaseAuth from '@/components/firebase/FirebaseAuth';
 import { useTheme, Theme, useFoods } from '@/contexts/index';
-import { Google, IconWarning } from '@/components/Icon';
+import { Google, GitHub, IconWarning } from '@/components/Icon';
 import { DataResetButton } from '@/components/Buttons/Buttons';
 import { loadSamples, toggleColorMode } from '@/coreMethods/dataPersistence';
+import { useUser } from '../components/firebase/useUser';
 
 type DataStatus = 'load' | 'delete';
 type DataStatusProp = {
@@ -19,9 +21,11 @@ const Loader: React.FC<DataStatusProp> = ({ status }) => {
 
 const SettingsPage: NextPage = () => {
   const { theme, setTheme } = useTheme();
+  const [cloudIsConnected, setCloudIsConnected] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const [dataStatus, setDateStatus] = useState<DataStatus>('load');
   const { setFoodItems } = useFoods();
+  const { user, logout } = useUser();
   const colorSwitcher = (e: SyntheticEvent & { target: HTMLInputElement }) => {
     const targetMode = e.target.value as Theme;
     setTheme(targetMode);
@@ -70,16 +74,34 @@ const SettingsPage: NextPage = () => {
                 id="cloud"
                 name="dataStorage"
                 value="cloud"
-                disabled
+                checked={cloudIsConnected}
+                onChange={() => setCloudIsConnected(!cloudIsConnected)}
               />
               <label htmlFor="cloud">
                 <span className="square" />
                 Enable Cloud Storage
               </label>
-              <button className="google" type="button" disabled>
+              <button
+                className="auth"
+                type="button"
+                disabled={!cloudIsConnected}
+              >
                 <Google />
                 Sign in with Google
               </button>
+              <button
+                className="auth"
+                type="button"
+                disabled={!cloudIsConnected}
+              >
+                <GitHub />
+                Sign in with GitHub
+              </button>
+              {!user ? (
+                <FirebaseAuth />
+              ) : (
+                <button onClick={() => logout()}>Log Out</button>
+              )}
               <span className="dev-note">Development in progress</span>
             </span>
           </div>

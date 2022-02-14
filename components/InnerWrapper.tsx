@@ -108,7 +108,7 @@ const Wrapper = styled.div`
       color: var(--missingField);
     }
   }
-  .google {
+  .auth {
     margin: 10px 0px;
     background: white;
     border: none;
