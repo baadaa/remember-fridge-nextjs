@@ -8,7 +8,7 @@ import { useUser } from './firebase/useUser';
 
 const Layout: React.FC = ({ children }) => {
   const { user } = useUser();
-  console.log(user);
+  // console.log(user);
   return (
     <>
       <SimpleHeader user={user ? user : sampleUser} />

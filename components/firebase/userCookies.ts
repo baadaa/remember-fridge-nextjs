@@ -4,12 +4,12 @@ import { mapUserData } from './mapUserData';
 export const getUserFromCookie = () => {
   const cookie = cookies.get('b_fridge_auth');
   if (!cookie) return;
-  console.log(cookie);
+  // console.log(cookie);
   return JSON.parse(cookie);
 };
 
 export const setUserCookie = (user) => {
-  console.log(user);
+  // console.log(user);
   cookies.set('b_fridge_auth', JSON.stringify(user));
 };
 

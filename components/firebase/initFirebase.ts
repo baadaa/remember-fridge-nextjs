@@ -14,17 +14,3 @@ const config = {
 export default function initFirebase() {
   if (!firebase.apps.length) firebase.initializeApp(config);
 }
-// This function creates the Firebase singleton for the app
-// let firebaseInstance;
-// export const getFirebase = (firebase) => {
-//   if (firebaseInstance) {
-//     return firebaseInstance;
-//   }
-
-//   const defaultFirebase = firebase.default;
-
-//   defaultFirebase.initializeApp(config);
-//   firebaseInstance = defaultFirebase;
-
-//   return defaultFirebase;
-// };
