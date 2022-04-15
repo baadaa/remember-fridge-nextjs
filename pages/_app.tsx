@@ -4,23 +4,28 @@ import {
   ThemeContext,
   Theme,
   FoodContext,
+  LocalUserContext,
   EditorContext,
 } from '@/contexts/index';
-import { Food } from '@/types/types';
+import { Food, User } from '@/types/types';
 import { emptyFoodItem } from '@/components/foodTemplate';
 import {
   setLocalStorage,
   toggleColorMode,
 } from '@/coreMethods//dataPersistence';
+import { Leopard } from '@/components/Avatars/Leopard';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const [theme, setTheme] = useState<Theme>(Theme.Light);
+  const [localUser, setLocalUser] = useState<User>();
   const [foodItems, setFoodItems] = useState<Array<Food>>([]);
   const [foodInEditor, setFoodInEditor] = useState<Food>(emptyFoodItem);
 
   const colorMode = { theme, setTheme };
   const foods = { foodItems, setFoodItems };
+  const currentLocalUser = { localUser, setLocalUser };
   const foodInFocus = { foodInEditor, setFoodInEditor };
+
   const applyColorTheme = (targetMode: Theme) => {
     setTheme(targetMode);
     toggleColorMode(targetMode);
@@ -29,6 +34,19 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     const storedFoods = window.localStorage.getItem('b_fridge_foods');
     if (storedFoods) {
       setFoodItems(JSON.parse(storedFoods));
+    }
+  };
+  const initLocalUser = () => {
+    const savedUser = window.localStorage.getItem('b_fridge_localUser');
+    if (savedUser) {
+      setLocalUser(JSON.parse(savedUser));
+    } else {
+      const randomUser: User = {
+        id: 'whatever',
+        name: 'whoever',
+        avatar: <Leopard />,
+      };
+      setLocalUser(randomUser);
     }
   };
 
@@ -43,6 +61,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       applyColorTheme(currentTheme);
     };
     loadColorTheme();
+    initLocalUser();
     loadStoredFoods();
   }, []);
 
@@ -56,11 +75,13 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
   return (
     <ThemeContext.Provider value={colorMode}>
-      <FoodContext.Provider value={foods}>
-        <EditorContext.Provider value={foodInFocus}>
-          <Component {...pageProps} />
-        </EditorContext.Provider>
-      </FoodContext.Provider>
+      <LocalUserContext.Provider value={currentLocalUser}>
+        <FoodContext.Provider value={foods}>
+          <EditorContext.Provider value={foodInFocus}>
+            <Component {...pageProps} />
+          </EditorContext.Provider>
+        </FoodContext.Provider>
+      </LocalUserContext.Provider>
     </ThemeContext.Provider>
   );
 }

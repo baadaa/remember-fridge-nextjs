@@ -8,7 +8,7 @@ import { useTheme, Theme, useFoods } from '@/contexts/index';
 import { Google, GitHub, IconWarning } from '@/components/Icon';
 import { DataResetButton } from '@/components/Buttons/Buttons';
 import { loadSamples, toggleColorMode } from '@/coreMethods/dataPersistence';
-import { useUser } from '../components/firebase/useUser';
+import { useFirebaseUser } from '../components/firebase/useFirebaseUser';
 
 type DataStatus = 'load' | 'delete';
 type DataStatusProp = {
@@ -25,7 +25,7 @@ const SettingsPage: NextPage = () => {
   const [isResetting, setIsResetting] = useState(false);
   const [dataStatus, setDateStatus] = useState<DataStatus>('load');
   const { setFoodItems } = useFoods();
-  const { user, logout } = useUser();
+  const { firebaseUser, logout } = useFirebaseUser();
   const colorSwitcher = (e: SyntheticEvent & { target: HTMLInputElement }) => {
     const targetMode = e.target.value as Theme;
     setTheme(targetMode);
@@ -97,7 +97,7 @@ const SettingsPage: NextPage = () => {
                 <GitHub />
                 Sign in with GitHub
               </button>
-              {!user ? (
+              {!firebaseUser ? (
                 <FirebaseAuth />
               ) : (
                 <button onClick={() => logout()}>Log Out</button>

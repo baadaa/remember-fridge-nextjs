@@ -12,8 +12,8 @@ import { mapUserData, UserInfo } from './mapUserData';
 
 initFirebase();
 
-const useUser = () => {
-  const [user, setUser] = useState<UserInfo>();
+const useFirebaseUser = () => {
+  const [firebaseUser, setFirebaseUser] = useState<UserInfo>();
   const [db, setDb] = useState<any>();
   const logout = async () => {
     return firebase
@@ -29,32 +29,32 @@ const useUser = () => {
           const userData = mapUserData(currentUser);
           // console.log('user:', currentUser, 'userData', userData);
           setUserCookie(userData);
-          setUser(userData);
+          setFirebaseUser(userData);
         } else {
           removeUserCookie();
-          setUser(null);
+          setFirebaseUser(null);
         }
       });
 
     const userFromCookie = getUserFromCookie();
     if (!userFromCookie) return;
 
-    setUser(userFromCookie);
+    setFirebaseUser(userFromCookie);
 
     return () => {
       cancelAuthListener();
     };
   }, []);
   useEffect(() => {
-    if (!user) return;
+    if (!firebaseUser) return;
     const database = firebase.database();
-    const foods = database.ref(`users/${user.id}/foods`);
+    const foods = database.ref(`users/${firebaseUser.id}/foods`);
     setDb(database);
     foods.on('value', (data) => {
       console.log(data.val());
     });
-  }, [user]);
-  return { user, logout, db };
+  }, [firebaseUser]);
+  return { firebaseUser, logout, db };
 };
 
-export { useUser };
+export { useFirebaseUser };

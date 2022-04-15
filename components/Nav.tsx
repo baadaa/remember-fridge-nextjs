@@ -7,6 +7,7 @@ import {
   IconList,
   IconSettings,
 } from '@/components/Icon';
+import { useEffect } from 'react';
 
 const NavStyles = styled.nav`
   order: -1;

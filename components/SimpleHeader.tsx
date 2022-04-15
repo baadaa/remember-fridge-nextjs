@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { User } from '@/types/types';
+import { useFirebaseUser } from './firebase/useFirebaseUser';
+import { useLocalUser } from '../contexts';
 import { placeholderAvatar } from 'sampleData/sampleUser';
 const introSliderHeight = 40;
 const Triangle = styled.div`
@@ -98,12 +101,12 @@ const HeadWrapper = styled.header`
     top: 0;
     right: 10px;
   }
-  .headshot {
+  .headshot,
+  svg {
     width: 45px;
     height: 45px;
     object-fit: cover;
     border-radius: 45px;
-    border: 1px solid red;
     cursor: pointer;
   }
   @media screen and (max-width: 960px) {
@@ -122,17 +125,60 @@ const HeadWrapper = styled.header`
 `;
 
 type HeaderProps = {
-  user: { profilePic: string };
+  user: User;
 };
 
-const SimpleHeader: React.FC<HeaderProps> = ({ user }) => {
+const SimpleHeader: React.FC = () => {
   const [introOpen, setIntroOpen] = useState(false);
+  const { firebaseUser } = useFirebaseUser();
+  const { localUser } = useLocalUser();
+  const [avatar, setAvatar] = useState<JSX.Element>(<></>);
+  const [profilePic, setProfilePic] = useState('');
   const router = useRouter();
   useEffect(() => {
     document.body.style.transform = introOpen
       ? `translateY(${introSliderHeight}px)`
       : 'translateY(0)';
-  });
+  }, []);
+
+  useEffect(() => {
+    if (!localUser) return;
+    setAvatar(firebaseUser ? <></> : localUser.avatar);
+    setProfilePic(
+      firebaseUser ? firebaseUser.profilePic : localUser.profilePic
+    );
+  }, [firebaseUser]);
+  const Avatar = ({ click }) => (
+    <button
+      onClick={click}
+      style={{
+        background: 'transparent',
+        padding: 0,
+        border: 'none',
+        outline: 'none',
+      }}
+    >
+      {avatar}
+    </button>
+  );
+  const Headshot = () => {
+    if (profilePic) {
+      return (
+        <Image
+          role="button"
+          src={profilePic}
+          unoptimized
+          alt=" "
+          className="headshot"
+          width="45"
+          height="45"
+          onClick={() => router.push('/settings')}
+        />
+      );
+    } else {
+      return <Avatar click={() => router.push('/settings')} />;
+    }
+  };
   return (
     <>
       <Triangle />
@@ -162,16 +208,7 @@ const SimpleHeader: React.FC<HeaderProps> = ({ user }) => {
       <HeadWrapper>
         <h1>My Fridge</h1>
         <div className="head">
-          <Image
-            role="button"
-            src={user.profilePic || placeholderAvatar}
-            unoptimized
-            alt=" "
-            className="headshot"
-            width="45"
-            height="45"
-            onClick={() => router.push('/settings')}
-          />
+          <Headshot />
         </div>
       </HeadWrapper>
     </>

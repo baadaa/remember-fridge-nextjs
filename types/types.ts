@@ -27,3 +27,11 @@ export type ButtonProps = {
   click?: () => void;
   isEditing?: boolean;
 };
+
+export type User = {
+  id: string;
+  name: string;
+  email?: string;
+  profilePic?: string;
+  avatar?: JSX.Element;
+};

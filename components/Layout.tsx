@@ -1,17 +1,12 @@
 import 'normalize.css';
 import GlobalStyles from '../styles/global';
 import SimpleHeader from './SimpleHeader';
-import sampleUser from '../sampleData/sampleUser';
 import Container from './Container';
 import Nav from './Nav';
-import { useUser } from './firebase/useUser';
-
 const Layout: React.FC = ({ children }) => {
-  const { user } = useUser();
-  // console.log(user);
   return (
     <>
-      <SimpleHeader user={user ? user : sampleUser} />
+      <SimpleHeader />
       <GlobalStyles />
       <div
         style={{
